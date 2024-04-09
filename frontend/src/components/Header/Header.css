@@ -1,0 +1,16 @@
+
+.user-menu{
+    padding-right: 1rem;
+    display:flex;
+    gap:1rem;
+}
+.username-span{
+    display: flex;
+    gap:0.3rem
+    
+}
+.exit-button{    
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 0.2rem;
+}

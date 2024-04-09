@@ -1,0 +1,4 @@
+API_PORT = 5000
+API_URL = "/api/v1"
+KAITEN_TOKEN =""
+KAITEN_URL = ""

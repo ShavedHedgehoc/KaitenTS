@@ -1,0 +1,8 @@
+body >#root{
+    width: 100%;
+    min-height: 100vh;    
+    background-color: #f9fafb;    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

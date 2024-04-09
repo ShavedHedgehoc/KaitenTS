@@ -1,14 +1,15 @@
 {
-  "editor.minimap.enabled": false,
-  "terminal.integrated.cursorStyle": "line",
-  "terminal.integrated.cursorBlinking": true,
-  "files.autoSave": "onFocusChange",
-  "terminal.integrated.defaultProfile.windows": "Command Prompt",
-  "explorer.compactFolders": false,
-  "explorer.autoReveal": false,
-  "breadcrumbs.enabled": false,
-  "workbench.startupEditor": "none",
-  "window.commandCenter": false,
-  "git.autoRepositoryDetection": "subFolders",
-  "editor.formatOnSave": true
+    "editor.minimap.enabled": false,
+    "terminal.integrated.cursorStyle": "line",
+    "terminal.integrated.cursorBlinking": true,
+    "files.autoSave": "onFocusChange",
+    "terminal.integrated.defaultProfile.windows": "Command Prompt",
+    "explorer.compactFolders": false,
+    "explorer.autoReveal": false,
+    "breadcrumbs.enabled": false,
+    "workbench.startupEditor": "none",
+    "window.commandCenter": false,
+    "git.autoRepositoryDetection": "subFolders",
+    "editor.formatOnSave": true,
+    "prettier.printWidth": 120
 }
