@@ -1,6 +1,6 @@
 import { kaitenBoardColumns, kaitenBoardLanes, kaitenRoutes } from '../../../consts/consts'
 import { $kaitenApi } from '../../../http'
-import { createBoardPayload, deleteBoardPayload, getBoardPayload } from '../../../types'
+import { bulkDeleteBoardsPayload, createBoardPayload, deleteBoardPayload, getBoardPayload } from '../../../types'
 import TaskService, { addTaskPayload } from '../../TaskService'
 import * as mapper from './mapper'
 
@@ -26,8 +26,8 @@ export default class BoardService {
         return mapper.toBoard(serverResponse.data)
     }
 
-    async getBoards(payload: getBoardPayload) {
-        const url = this.createUrl(payload.spaceId)
+    async getBoards(id: number) {
+        const url = this.createUrl(id)
         const serverResponse = await $kaitenApi.get(url)
         return mapper.toBoardsList(serverResponse.data)
     }
@@ -37,5 +37,27 @@ export default class BoardService {
         const options = JSON.stringify({ force: true })
         const serverResponse = await $kaitenApi({ method: 'DELETE', url: url, data: options })
         return mapper.toDeletedBoardId(serverResponse.data)
+    }
+
+    async bulkDeleteBoards(payload: bulkDeleteBoardsPayload) {
+        try {
+            const addBoardsDeleteTaskPayload: addTaskPayload = {
+                userId: payload.userId,
+                title: `Удаление сводок`,
+                toProcess: payload.boards.length,
+            }
+            const addBoardsDeleteTask = await this.TaskService.createTask(addBoardsDeleteTaskPayload)
+            payload.boards.forEach(async (board) => {
+                const boardPayload: deleteBoardPayload = {
+                    spaceId: payload.spaceId,
+                    boardId: board,
+                }
+                console.log(boardPayload)
+                await this.deleteBoard(boardPayload)
+                await this.TaskService.updateTaskProgress({ id: addBoardsDeleteTask.id })
+            })
+        } catch (error) {
+            console.log(error)
+        }
     }
 }

@@ -17,6 +17,7 @@ const AppRouter = () => {
     const protectedLoader = () => {
         const userRoles = store.AuthStore.user.roles
         if (
+            userRoles &&
             userRoles.indexOf(DbRoles.SPECIALIST) === -1 &&
             userRoles.indexOf(DbRoles.ADMIN) === -1 &&
             store.AuthStore.isAuth
@@ -28,7 +29,7 @@ const AppRouter = () => {
 
     const adminLoader = () => {
         const userRoles = store.AuthStore.user.roles
-        if (userRoles.indexOf(DbRoles.ADMIN) === -1 && store.AuthStore.isAuth) {
+        if (userRoles && userRoles.indexOf(DbRoles.ADMIN) === -1 && store.AuthStore.isAuth) {
             return redirect(RouteNames.FORBIDDEN)
         }
         return null

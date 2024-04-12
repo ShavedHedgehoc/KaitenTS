@@ -1,3 +1,4 @@
+import { ApiErrorsMsg } from '../consts/apiMessages'
 import ApiError from '../errors'
 import Role from '../models/Role'
 import User from '../models/User'
@@ -14,11 +15,8 @@ export default class UserService {
         return user
     }
 
-    async getByEmail(email: string): Promise<User> {
+    async getByEmail(email: string): Promise<User | null> {
         const user = await User.findOne({ where: { email: email } })
-        if (user === null) {
-            throw ApiError.BadRequest('User not found')
-        }
         return user
     }
 

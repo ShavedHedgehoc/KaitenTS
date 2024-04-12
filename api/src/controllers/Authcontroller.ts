@@ -3,6 +3,7 @@ import AuthService from '../services/AuthService'
 import { RegisteredUser } from '../types'
 import { validationResult } from 'express-validator'
 import { Request, Response, NextFunction } from 'express'
+import { ApiErrorsMsg } from '../consts/apiMessages'
 
 class AuthController {
     private AuthService: AuthService
@@ -44,10 +45,10 @@ class AuthController {
         try {
             const payload = req.body
             if (!payload.email) {
-                throw ApiError.BadRequest('Нет email')
+                throw ApiError.BadRequest(ApiErrorsMsg.FIELD_EMAIL_MISSING)
             }
             if (!payload.password) {
-                throw ApiError.BadRequest('Нет password')
+                throw ApiError.BadRequest(ApiErrorsMsg.FIELD_PASSWORD_MISSING)
             }
             const result: RegisteredUser = await this.AuthService.login(payload)
             return res.status(201).cookie('refreshToken', result.token, this.options).json(result.data)

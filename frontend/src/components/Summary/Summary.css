@@ -1,0 +1,31 @@
+.summary__container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-top: 1rem;
+    gap: 1.5rem;
+}
+
+.summary__header {
+    padding-left: 1rem;
+    color: var(--primary-color)
+}
+
+.summary__table_header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.summary__table_header_delete_checker {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.summary__table_header_buttons {
+    display: flex;
+    gap: 1.5rem;
+
+}

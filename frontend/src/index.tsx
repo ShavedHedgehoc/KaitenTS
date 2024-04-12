@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/client'
 import './styles/reset.css'
 import './styles/common.css'
 
-import App from './App'
+import App from './components/App/App'
 // import Store from './store/AuthStore'
 import Store from './store'
 

@@ -1,5 +1,5 @@
 import express from 'express'
-import cors from 'cors'
+// import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import dotenv from 'dotenv'
 import { Server, createServer } from 'http'
@@ -28,7 +28,7 @@ export default class App {
 
     private createApp(): express.Application {
         const app = express()
-        app.use(cors())
+        // app.use(cors())
         app.use(express.urlencoded({ extended: true, limit: '1mb' }))
         app.use(express.json())
         app.use(cookieParser())

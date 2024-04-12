@@ -63,7 +63,7 @@ export default class TaskStore {
     async fetchTasks(userId: number) {
         try {
             const response = await TasksService.getTasks(userId)
-            console.log(response)
+            // console.log(response)
             this.setTasks(response.data.tasks)
         } catch (error: any) {
             console.log(error.response?.data?.message)

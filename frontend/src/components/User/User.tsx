@@ -1,15 +1,12 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
+import './User.css'
 
 function User() {
-    const fakeAction = () => {
-        console.log('action')
-    }
     return (
-        <div>
-            User page
-            <div>
-                <button onClick={() => fakeAction()}>lsdjfldjsl</button>
+        <div className="user__container">
+            <div className="user__header">
+                <h2>Пользователи</h2>
             </div>
         </div>
     )

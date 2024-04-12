@@ -10,14 +10,8 @@ class TaskController {
 
     get = async (req: any, res: any) => {
         try {
-            // let payload = {} as getTasksByUserIdPayload
             const payload = parseInt(req.params.userId)
-            // console.log(req.query)
-            // console.log(req.body)
-            // payload.userId = 12
-            // console.log(payload)
             const tasks: Task[] = await this.TaskService.getTasksByUserId(payload)
-
             res.status(201).send(tasks)
         } catch (error: any) {
             res.status(400).send({ error: error.message })

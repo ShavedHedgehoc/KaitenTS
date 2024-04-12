@@ -1,0 +1,12 @@
+.user__container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-top: 1rem;
+    gap: 1.5rem;
+}
+
+.user__header {
+    padding-left: 1rem;
+    color: var(--primary-color)
+}

@@ -1,0 +1,23 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const SpaceController_1 = __importDefault(require("../controllers/Kaiten/SpaceController"));
+const BoardController_1 = __importDefault(require("../controllers/Kaiten/BoardController"));
+const CardController_1 = __importDefault(require("../controllers/Kaiten/CardController"));
+const UploadController_1 = __importDefault(require("../controllers/Kaiten/UploadController"));
+const router = express_1.default.Router();
+const controller = new SpaceController_1.default();
+const bcontroller = new BoardController_1.default();
+const ccontroller = new CardController_1.default();
+const uploadController = new UploadController_1.default();
+router.get('/', [], controller.get);
+router.post('/boards', [], bcontroller.post);
+router.get('/boards/:spaceId', [], bcontroller.get);
+router.post('/boards/bulk_delete', [], bcontroller.bulkDelete);
+router.delete('/boards', [], bcontroller.delete);
+router.post('/cards', ccontroller.post);
+router.post('/upload', uploadController.post);
+exports.default = router;

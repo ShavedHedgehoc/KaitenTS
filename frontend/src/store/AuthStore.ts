@@ -1,11 +1,13 @@
 import { makeAutoObservable } from 'mobx'
 import { IUser } from '../models/IUser'
 import AuthService from '../services/AuthService'
+import handleError from '../http/handleError'
 
 export default class AuthStore {
     user = {} as IUser
     isAuth = false
     pending = false
+    error = ''
 
     constructor() {
         makeAutoObservable(this)
@@ -23,15 +25,26 @@ export default class AuthStore {
         this.pending = bool
     }
 
+    setError(error: string) {
+        this.error = error
+    }
+
     async login(email: string, password: string) {
         try {
+            this.setPending(true)
+            this.setError('')
             const response = await AuthService.login(email, password)
             console.log(response)
             localStorage.setItem('token', response.data.token)
             this.setAuth(true)
             this.setUser(response.data.user)
         } catch (error: any) {
+            const errValue = handleError(error)
+            this.setError(errValue)
+
             console.log(error.response?.data?.message)
+        } finally {
+            this.setPending(false)
         }
     }
     async register(name: string, email: string, password: string) {
@@ -66,7 +79,8 @@ export default class AuthStore {
             this.setAuth(true)
             this.setUser(response.data.user)
         } catch (error: any) {
-            console.log(error.response?.data?.message)
+            console.log(error)
+            // console.log(error.response?.data?.message)
         } finally {
             this.setPending(false)
         }

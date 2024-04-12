@@ -2,15 +2,19 @@ import React, { useContext, useEffect } from 'react'
 import { RouterProvider } from 'react-router-dom'
 import { observer } from 'mobx-react-lite'
 import { PrimeReactProvider } from 'primereact/api'
-import LoginForm from './components/LoginForm/LoginForm'
-import { Context } from '.'
-import AppRouter from './router'
+import LoginForm from '../LoginForm/LoginForm'
+import { Context } from '../..'
+import AppRouter from '../../router'
 
 import 'primereact/resources/themes/lara-light-amber/theme.css'
 // import 'primereact/resources/themes/bootstrap4-dark-blue/theme.css'
 import 'primeicons/primeicons.css'
 import 'primereact/resources/primereact.css'
 import 'primeflex/primeflex.css'
+// import Header from '../Header/Header'
+// import Tasks from '../Tasks/Tasks'
+// import Content from '../Content'
+// import './App.css'
 
 const App: React.FC = () => {
     const { store } = useContext(Context)
@@ -23,7 +27,7 @@ const App: React.FC = () => {
         if (store.AuthStore.isAuth) {
             store.TaskStore.fetchTasks(store.AuthStore.user.id)
         }
-    }, [])
+    }, [store.AuthStore])
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -35,9 +39,9 @@ const App: React.FC = () => {
         return () => clearInterval(interval)
     }, [])
 
-    if (store.AuthStore.pending) {
-        return <div>Loading...</div>
-    }
+    // if (store.AuthStore.pending) {
+    //     return <div>Loading...</div>
+    // }
     if (
         !store.AuthStore.isAuth &&
         !store.AuthStore.pending &&
@@ -51,6 +55,20 @@ const App: React.FC = () => {
         <PrimeReactProvider>
             <RouterProvider router={observer(router)} />
         </PrimeReactProvider>
+        // <PrimeReactProvider>
+        // <div className="app-container">
+        //     <div className="app-header">
+        //         <Header />
+        //     </div>
+        //     <div className="app-content">
+        //         <Content />
+        //         {/* <RouterProvider router={observer(router)} /> */}
+        //     </div>
+        //     <div className="app-tasks">
+        //         <Tasks />
+        //     </div>
+        // </div>
+        // </PrimeReactProvider>
     )
 }
 

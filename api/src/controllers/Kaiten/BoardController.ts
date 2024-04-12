@@ -1,5 +1,6 @@
+import { Request, Response, NextFunction } from 'express'
 import BoardService from '../../services/kaiten/board/BoardService'
-import { createBoardPayload, deleteBoardPayload, getBoardPayload } from '../../types'
+import { bulkDeleteBoardsPayload, createBoardPayload, deleteBoardPayload, getBoardPayload } from '../../types'
 
 class BoardController {
     private BoardService: BoardService
@@ -7,33 +8,43 @@ class BoardController {
     constructor() {
         this.BoardService = new BoardService()
     }
-    get = async (req: any, res: any) => {
+    get = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const payload: getBoardPayload = req.body
+            const payload = parseInt(req.params.spaceId)
             const boards = await this.BoardService.getBoards(payload)
-            res.status(200).json(boards)
+            return res.status(200).json(boards)
         } catch (error: any) {
-            res.status(400).send({ error: error })
+            next(error)
         }
     }
 
-    post = async (req: any, res: any) => {
+    post = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const payload: createBoardPayload = req.body
             const board = await this.BoardService.createBoard(payload)
-            res.status(200).json(board)
+            return res.status(200).json(board)
         } catch (error: any) {
-            res.status(400).send({ error: error })
+            next(error)
         }
     }
 
-    delete = async (req: any, res: any) => {
+    delete = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const payload: deleteBoardPayload = req.body
             const boardId = await this.BoardService.deleteBoard(payload)
-            res.status(200).json(boardId)
+            return res.status(200).json(boardId)
         } catch (error: any) {
-            res.status(400).send({ error: error })
+            next(error)
+        }
+    }
+
+    bulkDelete = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const payload: bulkDeleteBoardsPayload = req.body
+            this.BoardService.bulkDeleteBoards(payload)
+            return res.status(200).json({ msg: 'Deletetasks added' })
+        } catch (error: any) {
+            next(error)
         }
     }
 }

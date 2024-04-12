@@ -1,12 +1,15 @@
 import { Dialect } from 'sequelize'
 import { Sequelize } from 'sequelize-typescript'
+import dotenv from 'dotenv'
 import User from '../models/User'
 import Role from '../models/Role'
 import Token from '../models/Token'
 import UserRoles from '../models/UserRoles'
 import Task from '../models/Task'
 
-const dbDialect = (process.env.DB_DRIVER || 'sqlite') as Dialect
+dotenv.config()
+
+const dbDialect = 'sqlite' as Dialect
 const dbStorage = process.env.DB_STORAGE || 'db.dev.sqlite'
 
 const sequelize = new Sequelize({

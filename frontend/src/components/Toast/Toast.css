@@ -1,0 +1,49 @@
+.toast__container {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    gap: 0.3rem;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.toast__card {
+    background-color: #f7c0c0;
+    border: solid 0.5px #e3400e;
+    color: #e3400e;
+    border-radius: 0.5rem;
+    display: flex;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    width: 100%;
+    font-size: 0.8rem;
+    display: flex;
+    justify-content: left;
+    align-items: flex-start;
+
+
+}
+
+.show {
+
+
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.3rem;
+    background-color: #e42121;
+    border: solid 0.5px #e5e7eb;
+    border-radius: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    font-size: 0.8rem;
+}
+
+.hidden {
+    opacity: 0;
+}

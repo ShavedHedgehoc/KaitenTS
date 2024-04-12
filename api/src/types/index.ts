@@ -74,3 +74,9 @@ export type deleteBoardPayload = {
     spaceId: number
     boardId: number
 }
+
+export type bulkDeleteBoardsPayload = {
+    userId: number
+    spaceId: number
+    boards: number[]
+}

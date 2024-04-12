@@ -1,22 +1,26 @@
 import React, { ChangeEvent, useContext, useState } from 'react'
 import { Context } from '../..'
-
 import { observer } from 'mobx-react-lite'
-
 import { Steps } from 'primereact/steps'
-
 import * as XLSX from 'xlsx'
-
-import './Upload.css'
-import { uploadArraySchema } from '../../schemas/xls-upload.schema'
 import Ajv, { SchemaObject } from 'ajv/dist/jtd'
 import { ISummary } from '../../models/ISummary'
 import { ISummaryUploadData } from '../../models/ISummaryUploadData'
 import { IXLSData } from '../../models/IXLSXData'
+import { Calendar } from 'primereact/calendar'
+import { Dropdown } from 'primereact/dropdown'
+import { Plants } from '../../consts/kaitenSpaces'
+
+import './Upload.css'
+
+interface IPlantItem {
+    key: number
+    name: string
+    code: number
+}
 
 function Upload() {
     const ajv = new Ajv({ allErrors: true })
-    // const val = ajv.compile(uploadArraySchema)
 
     const valSchema: SchemaObject = {
         properties: {
@@ -36,16 +40,36 @@ function Upload() {
 
     const { store } = useContext(Context)
 
+    const getTomorrowDate = (): Date => {
+        let tomorrow = new Date()
+        tomorrow.setDate(tomorrow.getDate() + 1)
+        return tomorrow
+    }
+
+    const getTransformedDate = (dateValue: Date): string | null => {
+        let transformedDate = new Date(dateValue).toLocaleString('ru-RU', {
+            timeZone: 'Europe/Moscow',
+            hour12: false,
+        })
+        if (transformedDate === 'Invalid Date') return null
+        return transformedDate.substring(0, 10)
+    }
+
+    const plantItems: IPlantItem[] = Plants.map((plant) => ({ key: plant.id, name: plant.name, code: plant.workBoard }))
+
     const [activeIndex, setActiveIndex] = useState(0)
     const [fileName, setFileName] = useState('')
     const [file, setFile] = useState<File>()
     const [isValid, setIsValid] = useState(false)
+    const [summaryDate, setSumaryDate] = useState(() => getTomorrowDate())
     const [dataForUpload, setDataForUpload] = useState({} as ISummaryUploadData)
     const [errs, setErrs] = useState<Array<string>>([])
+    const [plant, setPlant] = useState(plantItems[0])
 
-    const addStatesToJson = (json: ISummary[]) => {
-        const spaceId = 283675 // replace from space selector
-        const title = 'Сводка Пискаревский 12/05/2024'
+    const fillUploadData = (json: ISummary[]) => {
+        const spaceId = plant.code
+        const titleDate = getTransformedDate(summaryDate)
+        const title = `Сводка ${plant.name} ${titleDate}`
         const rows: ISummary[] = json
         setDataForUpload({ spaceId: spaceId, title: title, rows: rows, userId: store.AuthStore.user.id })
     }
@@ -57,10 +81,9 @@ function Upload() {
     }
 
     const handleValidationComplete = (json: IXLSData[]) => {
-        addStatesToJson(json)
+        fillUploadData(json)
         setActiveIndex(2)
         setIsValid(true)
-        console.log('validation completed')
     }
 
     const upload = async () => {
@@ -69,13 +92,12 @@ function Upload() {
     }
 
     const clearData = () => {
-        console.log('clear')
         setIsValid(false)
         setDataForUpload({} as ISummaryUploadData)
         setFile(undefined)
         setFileName('')
         setActiveIndex(0)
-        setErrs([])
+        setErrs((prev) => [])
     }
 
     const validate = () => {
@@ -100,13 +122,7 @@ function Upload() {
             } catch (error) {
                 console.log(error)
             }
-            if (valResult) {
-                handleValidationComplete(json)
-            } else {
-                console.log('Validation failed!')
-
-                setIsValid(false)
-            }
+            valResult ? handleValidationComplete(json) : setIsValid(false)
         }
 
         file && reader.readAsArrayBuffer(file)
@@ -115,11 +131,43 @@ function Upload() {
     const items = [{ label: 'Выбор файла' }, { label: 'Валидация' }, { label: 'Загрузка' }]
 
     return (
-        <div className="upload-container">
-            <div className="upload-header">
+        <div className="upload__container">
+            <div className="upload__header">
                 <h2>Загрузка сводок</h2>
             </div>
-            <div className="upload-form">
+            <div className="upload__form">
+                <div className="upload__date_plant_picker">
+                    <div className="upload__picker">
+                        <div>
+                            <span>Выберите площадку:</span>
+                        </div>
+                        <div>
+                            <Dropdown
+                                value={plant}
+                                optionLabel="name"
+                                onChange={(e) => setPlant(e.value)}
+                                options={plantItems}
+                                placeholder="Выберите площадку"
+                            />
+                        </div>
+                    </div>
+                    <div className="upload__picker">
+                        <div>
+                            <span>Выберите дату:</span>
+                        </div>
+                        <div>
+                            <Calendar
+                                value={summaryDate}
+                                dateFormat="dd/mm/yy"
+                                onChange={(e) => {
+                                    if (e.value) {
+                                        setSumaryDate(e.value)
+                                    }
+                                }}
+                            />
+                        </div>
+                    </div>
+                </div>
                 <div className="upload-select-file">
                     <div
                         className={

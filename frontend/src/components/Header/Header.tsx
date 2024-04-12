@@ -7,6 +7,7 @@ import { Context } from '../..'
 import './Header.css'
 
 function Header() {
+    // console.log('render Header')
     const { store } = useContext(Context)
     const navigate = useNavigate()
 

@@ -5,13 +5,14 @@ import './Layout.css'
 import Tasks from '../Tasks/Tasks'
 
 export default function Layout() {
+    // console.log('render layout')
     return (
         <div className="layout">
             <div className="header">
                 <Header />
             </div>
             <div className="layout-content">
-                <Suspense fallback={<div>Loading...</div>}>
+                <Suspense fallback={<div>Loading..///.</div>}>
                     <Outlet />
                 </Suspense>
             </div>
@@ -19,5 +20,8 @@ export default function Layout() {
                 <Tasks />
             </div>
         </div>
+        // <Suspense fallback={<div>Loading...</div>}>
+        //     <Outlet />
+        // </Suspense>
     )
 }

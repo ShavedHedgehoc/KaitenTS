@@ -4,20 +4,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const cors_1 = __importDefault(require("cors"));
+// import cors from 'cors'
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
+const dotenv_1 = __importDefault(require("dotenv"));
 const http_1 = require("http");
+const db_1 = __importDefault(require("../db/db"));
+const index_1 = __importDefault(require("../routes/index"));
+const errors_middleware_1 = __importDefault(require("../middleware/errors.middleware"));
+dotenv_1.default.config();
 class App {
-    //   private sequelize:Sequelize
-    constructor(port = 5000, host = "localhost") {
+    constructor(port = 5000, host = 'localhost') {
         this.port = port;
         this.host = host;
         this.app = this.createApp();
         this.server = this.createServer();
-        // this.sequelize = sequelize // from db
+        this.sequelize = db_1.default;
     }
     createApp() {
         const app = (0, express_1.default)();
-        app.use((0, cors_1.default)());
+        // app.use(cors())
+        app.use(express_1.default.urlencoded({ extended: true, limit: '1mb' }));
+        app.use(express_1.default.json());
+        app.use((0, cookie_parser_1.default)());
+        app.use('/api/v1', index_1.default);
+        app.use(errors_middleware_1.default);
         return app;
     }
     createServer() {

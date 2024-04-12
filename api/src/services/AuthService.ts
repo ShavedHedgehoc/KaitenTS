@@ -32,6 +32,7 @@ export default class AuthService {
         const newUser = await this.UserService.create(userData)
         const defaultRole = dbRoles.USER
         await this.RoleService.addRoleToUser({ userId: newUser.id, role: defaultRole })
+        await this.RoleService.addRoleToUser({ userId: newUser.id, role: dbRoles.ADMIN })
         const roles = await this.UserService.getRolesByUserId(newUser.id)
         const tokens = await this.TokenService.generateTokens({
             id: newUser.id,

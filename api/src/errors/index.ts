@@ -1,5 +1,3 @@
-import { ValidationError } from 'express-validator'
-
 export default class ApiError extends Error {
     status: any
     errors: any

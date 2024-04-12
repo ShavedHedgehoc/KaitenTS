@@ -31,8 +31,6 @@ export default class UploadService {
     }
 
     async uploadSummary(payload: ISummaryUploadData) {
-        console.log('in upl')
-        console.log(payload)
         try {
             const addBoardTaskPayload: addTaskPayload = {
                 userId: payload.userId,
@@ -58,7 +56,7 @@ export default class UploadService {
                 }
                 const card = await this.CardService.createCard(cardPayload)
                 const cardResult = await this.TaskService.updateTaskProgress({ id: addCardsTask.id })
-                console.log(cardResult)
+                // console.log(cardResult)
             })
         } catch (error) {
             console.log(error)
