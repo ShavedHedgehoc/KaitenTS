@@ -24,10 +24,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_typescript_1 = require("sequelize-typescript");
 const User_1 = __importDefault(require("./User"));
 let Task = class Task extends sequelize_typescript_1.Model {
-    // @AllowNull(false)
-    // @Default(false)
-    // @Column
-    // error: boolean
     static closeTask(instance) {
         return __awaiter(this, void 0, void 0, function* () {
             // const { toProcess, processed, completed } = instance

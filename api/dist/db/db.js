@@ -13,12 +13,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_typescript_1 = require("sequelize-typescript");
+const dotenv_1 = __importDefault(require("dotenv"));
 const User_1 = __importDefault(require("../models/User"));
 const Role_1 = __importDefault(require("../models/Role"));
 const Token_1 = __importDefault(require("../models/Token"));
 const UserRoles_1 = __importDefault(require("../models/UserRoles"));
 const Task_1 = __importDefault(require("../models/Task"));
-const dbDialect = (process.env.DB_DRIVER || 'sqlite');
+dotenv_1.default.config();
+const dbDialect = 'sqlite';
 const dbStorage = process.env.DB_STORAGE || 'db.dev.sqlite';
 const sequelize = new sequelize_typescript_1.Sequelize({
     dialect: dbDialect,

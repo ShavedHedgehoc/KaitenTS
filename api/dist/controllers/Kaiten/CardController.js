@@ -22,7 +22,6 @@ class CardController {
                 res.status(200).send(card);
             }
             catch (error) {
-                //   console.log(error);
                 res.status(401).send({ error: error });
             }
         });

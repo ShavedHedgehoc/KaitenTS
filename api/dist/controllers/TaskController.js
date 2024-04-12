@@ -17,12 +17,7 @@ class TaskController {
     constructor() {
         this.get = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
-                // let payload = {} as getTasksByUserIdPayload
                 const payload = parseInt(req.params.userId);
-                // console.log(req.query)
-                // console.log(req.body)
-                // payload.userId = 12
-                // console.log(payload)
                 const tasks = yield this.TaskService.getTasksByUserId(payload);
                 res.status(201).send(tasks);
             }
