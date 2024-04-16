@@ -6,10 +6,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 COPY ./frontend/package*.json ./
 COPY ./frontend/tsconfig.json ./
-COPY ./frontend/src ./src
-COPY ./frontend/public ./public
-
-
+COPY ./fromtend/src ./src
 
 
 

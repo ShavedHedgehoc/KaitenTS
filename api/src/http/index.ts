@@ -12,7 +12,7 @@ const headers = {
 const $kaitenApi = rateLimit(
     axios.create({
         baseURL: process.env.KAITEN_URL,
-        timeout: 1000,
+        timeout: 3000,
         headers: headers,
     }),
     { maxRequests: 1, perMilliseconds: 1000, maxRPS: 1 }
