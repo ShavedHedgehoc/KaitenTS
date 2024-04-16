@@ -71,6 +71,7 @@ export default class AuthService {
 
     async refresh(refreshToken: string): Promise<RegisteredUser> {
         const data = await this.TokenService.refreshTokens(refreshToken)
+        console.log(refreshToken);
         return data
     }
     async logout(data: any) {

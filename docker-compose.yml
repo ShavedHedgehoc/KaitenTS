@@ -1,15 +1,17 @@
 version: '3.3'
 
 services:
+    frontend:
+        build:
+            context: .
+            dockerfile: ./Docker/frontend/Dockerfile
+        ports:
+            - '80:80'
+
     api:
         build:
             context: .
             dockerfile: ./Docker/api/Dockerfile
         ports:
             - '5000:5000'
-    frontend:
-        build:
-            context: .
-            dockerfile: ./Docker/frontend/Dockerfile
-        ports:
-            - '80:3000'
+        restart: always

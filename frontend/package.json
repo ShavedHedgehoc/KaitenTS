@@ -52,8 +52,7 @@
         "@types/node": "^16.18.94",
         "@types/react": "^18.2.74",
         "@types/react-dom": "^18.2.24",
-        "@types/ajv": "^1.0.0",
-        "@types/xlsx": "^0.0.36"
-    },
-    "proxy": "http://192.168.250.237:5000"
+        "@types/ajv": "^1.0.0"
+    }
+    
 }
