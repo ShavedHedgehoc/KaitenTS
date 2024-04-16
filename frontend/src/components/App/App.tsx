@@ -20,10 +20,16 @@ const App: React.FC = () => {
     const { store } = useContext(Context)
     const router: any = AppRouter()
 
-    useEffect(() => {
-        if (localStorage.getItem('token')) {
-            store.AuthStore.checkAuth()
-        }
+    
+
+
+     useEffect(() => {
+    if (localStorage.getItem('token')) {
+      console.log("check");
+       store.AuthStore.checkAuth()
+    }
+    }, [])
+    useEffect(() => {       
         if (store.AuthStore.isAuth) {
             store.TaskStore.fetchTasks(store.AuthStore.user.id)
         }

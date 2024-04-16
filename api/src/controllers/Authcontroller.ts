@@ -13,7 +13,7 @@ class AuthController {
         this.AuthService = new AuthService()
         this.options = {
             httpOnly: true,
-            secure: true,
+            // secure: true,
         }
     }
 

@@ -15,6 +15,10 @@ const $api = axios.create({
 const $clearApi = axios.create({
     withCredentials: true,
     baseURL: apiUrl,
+     headers: {
+        'Content-Type': 'application/json',
+        // 'Content-Type': 'multipart/form-data',
+    },
 })
 
 $clearApi.interceptors.request.use(
